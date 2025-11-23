@@ -1,12 +1,13 @@
 
+using BokifyGrad.BLL.Services;
 using BokifyGrad.DAL;
 using BokifyGrad.DAL.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System;
+using System.Text;
 
 
 namespace Bokify_Grad
@@ -42,6 +43,9 @@ namespace Bokify_Grad
                             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                     };
                 });
+
+            builder.Services.AddScoped<TokenService>();
+            builder.Services.AddScoped<AuthService>();
 
             // Add services to the container.
 

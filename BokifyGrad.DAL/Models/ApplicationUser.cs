@@ -9,6 +9,6 @@ namespace BokifyGrad.DAL.Models
 {
     public class ApplicationUser: IdentityUser
     {
-        public string fullName { get; set; }
+        public string FullName { get; set; }
     }
 }
