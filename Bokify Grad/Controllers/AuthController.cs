@@ -15,6 +15,7 @@ namespace BokifyGrad.Controllers
             _authService = authService;
         }
 
+        // REGISTER ENDPOINT
         [HttpPost("register")]
         public async Task<IActionResult> Register(string fullName, string email, string password)
         {
@@ -25,13 +26,15 @@ namespace BokifyGrad.Controllers
                 UserName = email
             };
 
-            var success = await _authService.Register(user, password);
-            if (!success)
-                return BadRequest("Registration failed");
+            var result = await _authService.Register(user, password);
 
-            return Ok("User registered");
+            if (!result.Succeeded)
+                return BadRequest(result.Errors.Select(e => e.Description));
+
+            return Ok("User registered successfully");
         }
 
+        // LOGIN ENDPOINT
         [HttpPost("login")]
         public async Task<IActionResult> Login(string email, string password)
         {

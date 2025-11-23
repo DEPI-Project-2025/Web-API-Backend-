@@ -21,7 +21,8 @@ namespace BokifyGrad.BLL.Services
         public async Task<string> Login(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) return null;
+            if (user == null)
+                return null;
 
             if (!await _userManager.CheckPasswordAsync(user, password))
                 return null;
@@ -29,10 +30,9 @@ namespace BokifyGrad.BLL.Services
             return _tokenService.CreateToken(user);
         }
 
-        public async Task<bool> Register(ApplicationUser user, string password)
+        public async Task<IdentityResult> Register(ApplicationUser user, string password)
         {
-            var result = await _userManager.CreateAsync(user, password);
-            return result.Succeeded;
+            return await _userManager.CreateAsync(user, password);
         }
     }
 }
