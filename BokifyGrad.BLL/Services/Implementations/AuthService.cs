@@ -34,5 +34,28 @@ namespace BokifyGrad.BLL.Services
         {
             return await _userManager.CreateAsync(user, password);
         }
+        public async Task<string> GenerateResetPasswordToken(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return null;
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            return token;
+        }
+
+        public async Task<IdentityResult> ResetPassword(string email, string token, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Description = "User not found"
+                });
+
+            return await _userManager.ResetPasswordAsync(user, token, newPassword);
+        }
+
     }
 }

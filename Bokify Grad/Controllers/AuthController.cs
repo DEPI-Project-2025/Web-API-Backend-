@@ -1,4 +1,5 @@
-﻿using BokifyGrad.BLL.Services;
+﻿using BokifyGrad.BLL.DTOs.Account;
+using BokifyGrad.BLL.Services;
 using BokifyGrad.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,5 +45,27 @@ namespace BokifyGrad.Controllers
 
             return Ok(new { token });
         }
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
+        {
+            var token = await _authService.GenerateResetPasswordToken(model.Email);
+
+            if (token == null)
+                return BadRequest("User not found");
+
+            return Ok(new { ResetToken = token });
+        }
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
+        {
+            var result = await _authService.ResetPassword(model.Email, model.Token, model.NewPassword);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors.Select(e => e.Description));
+
+            return Ok("Password reset successfully");
+        }
+
+
     }
 }
