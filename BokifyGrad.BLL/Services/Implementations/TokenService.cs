@@ -1,4 +1,5 @@
-﻿using BokifyGrad.DAL.Models;
+﻿using BokifyGrad.BLL.Services.Interfaces.BokifyGrad.BLL.Interfaces;
+using BokifyGrad.DAL.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace BokifyGrad.BLL.Services
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private readonly IConfiguration _config;
 

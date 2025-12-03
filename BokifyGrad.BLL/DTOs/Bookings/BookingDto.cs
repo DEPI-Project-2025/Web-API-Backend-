@@ -11,8 +11,8 @@ namespace BokifyGrad.BLL.DTOs.Bookings
         public int BookingId { get; set; }
         public int RoomId { get; set; }
         public int RoomNumber { get; set; }
-        public DateOnly CheckInDate { get; set; }
-        public DateOnly CheckOutDate { get; set; }
+        public DateTime CheckInDate { get; set; }
+        public DateTime CheckOutDate { get; set; }
         public decimal TotalPrice { get; set; }
         public string Status { get; set; }
     }
