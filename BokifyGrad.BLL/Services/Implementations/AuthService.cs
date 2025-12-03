@@ -1,4 +1,5 @@
-﻿using BokifyGrad.DAL.Models;
+﻿using BokifyGrad.BLL.Services.Interfaces.BokifyGrad.BLL.Interfaces;
+using BokifyGrad.DAL.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace BokifyGrad.BLL.Services
@@ -7,11 +8,11 @@ namespace BokifyGrad.BLL.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
         public AuthService(UserManager<ApplicationUser> userManager,
-                           SignInManager<ApplicationUser> signInManager,
-                           TokenService tokenService)
+                   SignInManager<ApplicationUser> signInManager,
+                   ITokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

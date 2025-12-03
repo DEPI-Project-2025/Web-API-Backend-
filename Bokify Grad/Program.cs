@@ -1,5 +1,8 @@
 
 using BokifyGrad.BLL.Services;
+using BokifyGrad.BLL.Services.Implementations;
+using BokifyGrad.BLL.Services.Interfaces;
+using BokifyGrad.BLL.Services.Interfaces.BokifyGrad.BLL.Interfaces;
 using BokifyGrad.DAL;
 using BokifyGrad.DAL.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,16 +47,31 @@ namespace Bokify_Grad
                     };
                 });
 
-            builder.Services.AddScoped<TokenService>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<IRoomTypeService, RoomTypeService>();
+            builder.Services.AddScoped<IRoomService, RoomService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+            builder.Services.AddScoped<IReviewService, ReviewService>();
+
 
             // Add services to the container.
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader());
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             var app = builder.Build();
+            app.UseCors("AllowAllOrigins");
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -63,7 +81,7 @@ namespace Bokify_Grad
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();  
             app.UseAuthorization();
 
 

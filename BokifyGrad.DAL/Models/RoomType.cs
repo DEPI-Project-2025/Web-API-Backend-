@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace BokifyGrad.DAL.Models
 {
-    public class ApplicationUser: IdentityUser
+    public class RoomType
     {
-        public string FullName { get; set; }
+        public int RoomTypeId { get; set; }
+        public string Name { get; set; }          
+        public string Description { get; set; }    
+        public decimal BasePrice { get; set; }     
+
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
         public bool IsDeleted { get; set; }
 
-        public ICollection<Booking> Bookings { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        
+        public ICollection<Room> Rooms { get; set; }
     }
+
 }

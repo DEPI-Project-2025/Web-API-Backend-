@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BokifyGrad.BLL.Services.Interfaces
+namespace BokifyGrad.BLL.DTOs.Rooms
 {
-    internal interface IUserService
+
+    public class UpdateRoomDto : CreateRoomDto
     {
+        public string Status { get; set; }
     }
 }
